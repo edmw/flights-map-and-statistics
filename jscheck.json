@@ -1,0 +1,27 @@
+{
+    "esnext": true,
+    "preset": "google",
+    "maximumLineLength": {
+        "value": 104,
+        "allowUrlComments": true
+    },
+    "validateIndentation": 4,
+    "validateQuoteMarks": {
+        "mark": "'",
+        "escape": true
+    },
+    "disallowKeywordsOnNewLine": [],
+    "disallowKeywordsInComments": ["TODO", "FIXME"],
+    "jsDoc": {
+        "checkAnnotations": "jsdoc3",
+        "checkTypes": "capitalizedNativeCase",
+        "checkParamNames": true,
+        "checkRedundantParams": true,
+        "requireParamTypes": true,
+        "checkReturnTypes": true,
+        "checkRedundantReturns": true,
+        "requireReturnTypes": true,
+        "requireHyphenBeforeDescription": true
+    },
+    "verbose": false
+}

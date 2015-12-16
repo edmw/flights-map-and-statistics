@@ -1,0 +1,29 @@
+{
+    "opts": {
+        "private": true,
+        "destination": "./Documentation/",
+        "recurse": true,
+        "encoding": "utf8",
+        "template": "./node_modules/minami"
+    },
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc"]
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": true,
+        "default": {
+            "includeDate": false
+        }
+    },
+    "source": {
+        "include": ["Sources/application.js", "Sources/application"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    }
+}
+

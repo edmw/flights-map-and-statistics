@@ -1,0 +1,936 @@
+
+@light-scheme-color: #000000;
+@light-scheme-background-color: #F5EFD5;
+
+@dark-scheme-color: #EEEEEE;
+@dark-scheme-background-color: #362313;
+
+@standard-color: #333333;
+@standard-background-color: #FFFFFF;
+@standard-background-darker-color: darken(@standard-background-color, 8%);
+@standard-background-darkest-color: darken(@standard-background-color, 16%);
+
+@emphasized-color: #000000;
+@emphasized-background-color: #00ACAE;
+@emphasized-background-lighter-color: #CCEEEF;
+@emphasized-background-lightest-color: #E6F7F7;
+
+@ground-background-color: #666666;
+@ground-background-image: 'assets/images/wall.png';
+
+@border: false;
+@border-color: black;
+@border-size: 2px;
+
+@shadow: false;
+@shadow-color: rgba(0, 0, 0, 0.2);
+@shadow-size: 5px;
+
+@separator-color: #999999;
+@separator-size: 1px;
+
+@header-height: 1em;
+
+@menu-width: 320px;
+@menu-zindex: 10000;
+
+@list-width: 320px;
+
+@font-size: 100%;
+
+@button-size: 36px;
+
+.box100 {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.font100 {
+    font-family: 'Source Sans Pro', 'Arial Unicode MS';
+    font-size: @font-size;
+}
+.font80 {
+    font-family: 'Source Sans Pro', 'Arial Unicode MS';
+    font-size: 1rem;
+}
+
+// helper mixin for applying high-resolution background images
+
+@highdpi: ~"(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)";
+
+.background2x(@path, @w: auto, @h: auto) {
+  background-image: url(@path);
+
+  @2xpath: ~`@{path}.replace(/\.\w+$/, function(match) { return "@2x" + match; })`;
+
+  @media @highdpi {
+    background-image: url("@{2xpath}");
+    background-size: @w @h;
+  }
+}
+
+/*
+
+##     ## #### ######## ##      ## 
+##     ##  ##  ##       ##  ##  ## 
+##     ##  ##  ##       ##  ##  ## 
+##     ##  ##  ######   ##  ##  ## 
+ ##   ##   ##  ##       ##  ##  ## 
+  ## ##    ##  ##       ##  ##  ## 
+   ###    #### ########  ###  ###    
+
+*/
+
+html { .box100; }
+
+body { .box100; .font100 }
+
+table { .box100; .font100 }
+
+.header3 {
+    display: inline-block;
+    width: auto;
+    height: @header-height;
+    margin: 0;
+    padding: 0;
+    line-height: @header-height;
+    vertical-align: top; 
+}
+
+.header {
+    height: @header-height * 1.6;
+    background-color: @dark-scheme-background-color;
+    color: @dark-scheme-color;
+    font-size: @button-size;
+    line-height: @header-height;
+    text-align: center;
+    vertical-align: middle;
+}
+.header when (@border = true) {
+    border-bottom: @border-size solid @border-color;
+}
+.header .left {
+    .header3;
+    float: left;
+    margin-left: 0.25em;
+}
+.header .right {
+    .header3;
+    float: right;
+    margin-right: 0.25em;
+}
+.header .center {
+    .header3;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#menu {
+    position: absolute;
+    z-index: @menu-zindex;
+    left: 100%;
+    top: 0;
+    width: @menu-width;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+th#menu-header {
+    background-color: @emphasized-background-color;
+    color: @emphasized-color;
+}
+th#menu-header when (@border = true) {
+    border-left: @border-size solid @border-color;
+}
+td#menupane {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    background-color: @light-scheme-background-color;
+    color: @light-scheme-color;
+}
+#menupane-content {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+#menupane-content when (@border = true) {
+    border-left: @border-size solid @border-color;
+}
+
+th#map-header {
+    display: none;
+}
+td#map-content {
+    display: none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 150%;
+    color: black;
+    background-color: @ground-background-color ;
+    .background2x(@ground-background-image, 350, 259);
+}
+table#view.map th#map-header {
+    display: table-cell !important;
+}
+table#view.map td#map-content {
+    display: table-cell !important;
+}
+
+th#list-header {
+    display: none;
+}
+th#list-header when (@border = true) {
+    border-right: @border-size solid @border-color;
+}
+td#list-content {
+    display: none;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    font-size: 120%;
+    color: black;
+    background-color: @ground-background-color ;
+    .background2x(@ground-background-image, 350, 259);
+}
+td#list-content when (@border = true) {
+    border-right: @border-size solid @border-color;
+}
+table#view.list th#list-header {
+    display: table-cell !important;
+}
+table#view.list td#list-content {
+    display: table-cell !important;
+}
+table#view.map td#list-content {
+    width: @list-width !important;
+    max-width: @list-width !important;
+}
+
+td#toolpane {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+#toolpane-content {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+#toolpane-content when (@border = true) {
+    border-bottom: @border-size solid @border-color;
+}
+
+td#listpane {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#listpane-content {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+table#view.map #listpane-content {
+    width: @list-width !important;
+    max-width: @list-width !important;
+}
+
+/* BUTTONS */
+
+.button100 {
+    font-size: @button-size;
+    background-size: 100% 100% !important;
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.button80 {
+    font-size: @button-size;
+    background-size: 80% 80% !important;
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+#show-menu { background: url("assets/images/ui_button_menu.svg"); .button100; }
+#hide-menu { background: url("assets/images/ui_button_arrow_right.svg"); .button100; }
+#toggle-map { background: url("assets/images/ui_button_arrow_left.svg"); .button100; }
+table#view.map #toggle-map { background: url("assets/images/ui_button_arrow_right.svg") !important; .button100; }
+#toggle-list { background: url("assets/images/ui_button_arrow_right.svg"); .button100; }
+table#view.list #toggle-list { background: url("assets/images/ui_button_arrow_left.svg") !important; .button100;}
+#list-statistics { background: url("assets/images/ui_button_statistics.svg"); .button100; }
+#list-statistics.selected { background: url("assets/images/ui_marker_statistics.svg"); .button100; }
+#list-airports { background: url("assets/images/ui_button_airports.svg"); .button80; }
+#list-airports.selected { background: url("assets/images/ui_marker_airports.svg"); .button80; }
+#list-flights { background: url("assets/images/ui_button_flights.svg"); .button100; }
+#list-flights.selected { background: url("assets/images/ui_marker_flights.svg"); .button100; }
+#map-home { background: url("assets/images/ui_button_home.svg"); .button100; }
+#map-zoom-in { background: url("assets/images/ui_button_plus.svg"); .button100; }
+#map-zoom-out { background: url("assets/images/ui_button_minus.svg"); .button100; }
+#map-zoom-min { background: url("assets/images/ui_button_globe.svg"); .button100; }
+
+/*
+
+##     ## ######## ##    ## ##     ## ########     ###    ##    ## ######## 
+###   ### ##       ###   ## ##     ## ##     ##   ## ##   ###   ## ##       
+#### #### ##       ####  ## ##     ## ##     ##  ##   ##  ####  ## ##       
+## ### ## ######   ## ## ## ##     ## ########  ##     ## ## ## ## ######   
+##     ## ##       ##  #### ##     ## ##        ######### ##  #### ##       
+##     ## ##       ##   ### ##     ## ##        ##     ## ##   ### ##       
+##     ## ######## ##    ##  #######  ##        ##     ## ##    ## ######## 
+
+*/
+
+#menupane-content h1 {
+    font-size: 100%;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.menupane-content-section {
+    margin: 0;
+    padding: 0 1em 0 0.5em;
+}
+#menupane-content #settings {
+    .menupane-content-section;
+}
+
+#menupane-content #license {
+    .menupane-content-section;
+}
+#menupane-content #license p {
+    font-size: 80%;
+}
+
+#settings-ol_layer_switcher .baseLbl {
+    display: none;
+}
+#settings-ol_layer_switcher .baseLayersDiv {
+    margin-bottom: 1em;
+}
+#settings-ol_layer_switcher .dataLbl {
+    display: none;
+}
+
+/*
+
+##       ####  ######  ######## ########     ###    ##    ## ######## 
+##        ##  ##    ##    ##    ##     ##   ## ##   ###   ## ##       
+##        ##  ##          ##    ##     ##  ##   ##  ####  ## ##       
+##        ##   ######     ##    ########  ##     ## ## ## ## ######   
+##        ##        ##    ##    ##        ######### ##  #### ##       
+##        ##  ##    ##    ##    ##        ##     ## ##   ### ##       
+######## ####  ######     ##    ##        ##     ## ##    ## ######## 
+
+*/
+
+#listpane-content ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+#listpane-content ol li {
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: @standard-background-color;
+    color: @standard-color;
+}
+#listpane-content ol li > div {
+    padding: 0.75rem;
+    border-bottom: @separator-size solid @separator-color;
+}
+
+#listpane-content ol li li {
+    font-size: 80%;
+    margin: 0;
+    padding: 0;
+    background-color: @standard-background-darker-color;
+    color: @standard-color;
+}
+#listpane-content ol li li > div {
+    padding: 0 0.75rem;
+    border-bottom: none;
+}
+#listpane-content ol li li > div:first-child {
+    padding-top: 0.5rem;
+}
+#listpane-content ol li li > div:last-child {
+    padding-bottom: 0.5rem;
+    border-bottom: @separator-size solid @separator-color;
+}
+
+div.one .help {
+    font-size: 1.2rem;
+    float: right;
+    margin-left: 0.25em;
+}
+div.two:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+div.two p.left {
+    float: left;
+    margin: 0;
+    padding: 0;
+    padding-right: 0.5em;
+}
+div.two p.right {
+    float: right;
+    margin: 0;
+    padding: 0;
+    padding-left: 0.5em;
+}
+
+.accordion {
+    padding-right: 2em !important;
+    background: url('assets/images/chevron-left.svg') no-repeat;
+    background-size: 1em;
+    background-position: right 0.5em center;
+}
+.accordion.expanded {
+    background: url('assets/images/chevron-down.svg') no-repeat;
+    background-size: 1em;
+    background-position: right 0.5em center;
+}
+
+.airport-card {
+    background-color: @standard-background-darker-color;
+    color: @standard-color;
+}
+
+.statistics.head {
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+.statistics.section {
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+.statistics-card .statistics-header {
+    font-weight: 600;
+    padding-bottom: 0.5em;
+} 
+.statistics-card .statistics-header .right {
+    font-weight: normal;
+}
+
+.statistics-card .statistics-table {
+    font-size: 100%;
+}
+.statistics-card .statistics-table when (@border = true) {
+    border: 2px solid @emphasized-background-color;
+}
+.statistics-card .statistics-table tr:nth-child(even) {
+    background-color: @emphasized-background-lighter-color;
+}
+.statistics-card .statistics-table tr:nth-child(odd) {
+    background-color: @emphasized-background-lightest-color;
+}
+.statistics-card .statistics-table td {
+    padding: 0.25em 0.25em;
+    vertical-align: top;
+    text-align: left;
+}
+.statistics-card .statistics-table td when (@border = true) {
+    border: 1px solid @emphasized-background-color;
+}
+.statistics-card .statistics-table td:first-child {
+}
+.statistics-card .statistics-table td:last-child {
+    text-align: right;
+}
+
+.airport-card .airport-name {
+    font-weight: 600;
+}
+.airport-card .airport-codes {
+    margin: 0 0.5em 0 0.5em;
+    padding: 0 0.25em;
+    float: right;
+    font-family: 'Courier New';
+    font-size: 80%;
+    font-weight: normal;
+    text-align: left;
+    background-color: @standard-background-darkest-color;
+    color: @standard-color;
+    border-radius: 6px;
+}
+.airport-card .airport-codes .iata {
+    display: block;
+}
+.airport-card .airport-codes .icao {
+    display: block;
+}
+.statistics-card .airport-card .airport-name {
+    font-weight: 400;
+}
+
+.trip-card {
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.flight-route .origination {
+    white-space: nowrap;
+}
+.flight-route .origination:before {
+    content: "\2708";
+    padding-right: 0.25em;
+}
+.flight-route .destination {
+    white-space: nowrap;
+}
+.flight-route .destination:before {
+    content: "\21a6";
+    padding-right: 0.25em;
+}
+
+.flight-card {
+    background-color: @standard-background-darker-color;
+    color: @standard-color;
+}
+.flight-card .flight-route {
+    font-size: 120%;
+}
+.flight-card .flight-airport {
+    font-size: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.flight-card .takeoff:before {
+    display: inline-block;
+    content: " ";
+    width: 1em;
+    height: 1em;
+    margin-right: 0.25em;
+    background: url("assets/images/ui_symbol_takeoff.svg");
+    background-size: 100% 100%;
+}
+.flight-card .touchdown:before {
+    display: inline-block;
+    content: " ";
+    width: 1em;
+    height: 1em;
+    margin-right: 0.25em;
+    background: url("assets/images/ui_symbol_touchdown.svg");
+    background-size: 100% 100%;
+}
+.statistics-card .flight-card .flight-route {
+    font-size: 100%;
+}
+
+/*
+
+##     ##    ###    ########  
+###   ###   ## ##   ##     ## 
+#### ####  ##   ##  ##     ## 
+## ### ## ##     ## ########  
+##     ## ######### ##        
+##     ## ##     ## ##        
+##     ## ##     ## ##        
+
+*/
+
+#map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#map .olControlAttribution {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-family: 'Source Sans Pro', 'Arial Unicode MS';
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+#map .olControlLayerSwitcher {
+    font-family: 'Source Sans Pro', 'Arial Unicode MS';
+    font-size: 1.2rem;
+    background-color: #F5EFD5;
+    color: black;
+}
+#map .olControlLayerSwitcher .layersDiv {
+    font-size: 90%;
+    margin: 0;
+    padding: 1em;
+}
+
+#map .OpenLayers_Control_minimizeDiv {
+    display: None;
+}
+
+#map #airport-popup .airport-card {
+	background: white !important;
+}
+
+#map .popover {
+  position: relative;
+  max-width: 276px;
+  margin: 10px;
+  padding: 0;
+  font-family: 'Source Sans Pro', 'Arial Unicode MS';
+  font-size: 1.8rem;
+  text-align: left;
+  color: @standard-color;
+  background-color: @standard-background-color;
+  background-clip: padding-box;
+  white-space: normal;
+}
+#map .popover when (@border = true) {
+  border: solid @border-size @border-color;
+}
+#map .popover when (@shadow = true) {
+  box-shadow: 0 @shadow-size @shadow-size @shadow-color;
+}
+#map .popover.top {
+  top: 10px;
+  margin-top: -10px;
+}
+#map .popover.right {
+  margin-left: 10px;
+}
+#map .popover.bottom {
+  top: 0px;
+  margin-top: 10px;
+}
+#map .popover.left {
+  margin-left: -10px;
+}
+#map .popover-title {
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: @standard-background-darker-color;
+  color: @standard-color;
+}
+#map .popover-title when (@border = true) {
+  border-bottom: solid @separator-size @separator-color;
+}
+#map .popover-title:empty {
+  display: none;
+}
+#map .popover-content {
+  padding: 9px 14px;
+  font-size: 60%;
+}
+#map .popover .arrow,
+#map .popover .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+#map .popover .arrow {
+  border-width: 11px;
+}
+#map .popover .arrow:after {
+  border-width: 10px;
+  content: "";
+}
+#map .popover.top .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-width: 0;
+  bottom: -11px;
+}
+#map .popover.top .arrow when (@border = true) {
+  border-top-color: @border-color;
+}
+#map .popover.top .arrow:after {
+  bottom: 1px;
+  margin-left: -10px;
+  border-bottom-width: 0;
+  border-top-color: @standard-background-color;
+}
+#map .popover.right .arrow {
+  top: 50%;
+  left: -11px;
+  margin-top: -11px;
+  border-left-width: 0;
+}
+#map .popover.right .arrow when (@border = true) {
+  border-right-color: @border-color;
+}
+#map .popover.right .arrow:after {
+  left: 1px;
+  bottom: -10px;
+  border-left-width: 0;
+  border-right-color: @standard-background-color;
+}
+#map .popover.bottom .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-top-width: 0;
+  top: -11px;
+}
+#map .popover.bottom .arrow when (@border = true) {
+  border-bottom-color: @border-color;
+}
+#map .popover.bottom .arrow:after {
+  top: 1px;
+  margin-left: -10px;
+  border-top-width: 0;
+  border-bottom-color: @standard-background-color;
+}
+#map .popover.left .arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-right-width: 0;
+}
+#map .popover.left .arrow when (@border = true) {
+  border-left-color: @border-color;
+}
+#map .popover.left .arrow:after {
+  right: 1px;
+  border-right-width: 0;
+  border-left-color: @standard-background-color;
+  bottom: -10px;
+}
+
+#map .popover button.close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  color: @standard-color;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  vertical-align: middle;
+  -webkit-appearance: none;
+}
+#map .popover button.close:hover,
+#map .popover button.close:focus {
+  color: @standard-color;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*
+
+######## ##       ######## ##     ## ######## ##    ## ########  ######  
+##       ##       ##       ###   ### ##       ###   ##    ##    ##    ## 
+##       ##       ##       #### #### ##       ####  ##    ##    ##       
+######   ##       ######   ## ### ## ######   ## ## ##    ##     ######  
+##       ##       ##       ##     ## ##       ##  ####    ##          ## 
+##       ##       ##       ##     ## ##       ##   ###    ##    ##    ## 
+######## ######## ######## ##     ## ######## ##    ##    ##     ######  
+
+*/
+
+button {
+    display: inline-block;
+    font-family: 'Source Sans Pro', 'Arial Unicode MS';
+    font-size: 100%;
+    width: 1.0em;
+    height: 1.0em;
+    margin: 0 0.25em;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+button:focus {
+    outline: none;
+}
+
+select {
+    font-family: 'Source Sans Pro', 'Arial Unicode MS';
+    font-size: 90%;
+    width: 100%;
+    height: 42px;
+    margin: 0;
+    padding: 0 0.5em 0 2em;
+    overflow: hidden;
+    border: none;
+    border-radius: 0;
+    background: url('assets/images/chevron-down.svg') no-repeat;
+    background-color: @light-scheme-background-color;
+    background-size: auto 40%;
+    background-position: 0.5em center;
+    text-indent: 0.01px;
+    text-overflow: "";
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="radio"] {
+    background-color: @standard-background-darkest-color;  
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    margin-right: 1em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+input[type="radio"]:checked:after {
+    background-color: @emphasized-background-color;
+    border-radius: 4px;
+    content: '';
+    display: block;
+    position: relative;
+    left: 4px;
+    top: 4px;
+    width: 7px;
+    height: 7px;
+}
+
+/* ELEMENTS: modal div */
+
+div.modal.content {
+    padding: 1em;
+    color: @light-scheme-color;
+    background-color: @light-scheme-background-color;
+    .font80;
+}
+div.modal.content when (@border = true) {
+    border: solid @border-size @dark-scheme-background-color;
+}
+div.modal.content p {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 1em;
+    text-align: left;
+}
+div.modal.content p:last-child {
+    padding: 0;
+}
+
+/* ELEMENTS: help a */
+
+a.help {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    background: url('assets/images/questionmark.svg') no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.2;
+}
+
+/*
+
+########  #######  ##    ## ######## 
+##       ##     ## ###   ##    ##    
+##       ##     ## ####  ##    ##    
+######   ##     ## ## ## ##    ##    
+##       ##     ## ##  ####    ##    
+##       ##     ## ##   ###    ##    
+##        #######  ##    ##    ##    
+
+*/
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url(assets/fonts/SourceSansPro-Light.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(assets/fonts/SourceSansPro-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Source Sans Pro Semibold'), local('SourceSansPro-Semibold'), url(assets/fonts/SourceSansPro-Semibold.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(assets/fonts/SourceSansPro-Bold.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Source Sans Pro Light Italic'), local('SourceSansPro-LightIt'), url(assets/fonts/SourceSansPro-LightIt.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Source Sans Pro Italic'), local('SourceSansPro-It'), url(assets/fonts/SourceSansPro-It.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 600;
+  src: local('Source Sans Pro Semibold Italic'), local('SourceSansPro-SemiboldIt'), url(assets/fonts/SourceSansPro-SemiboldIt.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold Italic'), local('SourceSansPro-BoldIt'), url(assets/fonts/SourceSansPro-BoldIt.woff) format('woff');
+}

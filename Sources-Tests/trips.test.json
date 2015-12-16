@@ -1,0 +1,23 @@
+{
+    "name": "Test Trips",
+    "home": "LHR",
+    "trips": [
+        {
+            "label": "Trip 1",
+            "participants": [ "Alice", "Bob" ],
+            "flights": [
+                ["22220601", "LHR", "JFK", "BA115", "14:35-17:25"],
+                ["22220608", "JFK", "LAX", "DL424", "07:00-10:08"]
+            ]
+        },
+        {
+            "label": "Trip 2",
+            "participants": [ "Carol", "Bob" ],
+            "flights": [
+                ["20020601", "LHR", "MIA", "AA57", "09:45-14:15"],
+                ["20020608", "MIA", "SJO", "AA1267", "10:40-11:30"],
+                ["20020612", "SJO", "???", "", "15:30-21:30"]
+            ]
+        }
+    ]
+}
